@@ -1,7 +1,7 @@
 """
     address and privatekey should be changed 
     according to ganache simulation accounts
-    
+
 """
 
 from solcx import compile_standard, install_solc
@@ -44,11 +44,11 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # for connecting to ganache
 
-w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:8545"))
 
 
 chain_id = 1337
-my_address = "0x47Fb0c4c929529144aE97c1D91e421342c66cb7d"
+my_address = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1"
 private_key = os.getenv("PRIVATE_KEY")
 
 # whenever we are importing private_key or addresses we should mention 0x infront of it in python
@@ -69,7 +69,7 @@ nonce = w3.eth.getTransactionCount(my_address)
 # 3. Send the Transaction
 
 
-
+# DEPLOY CONTRACT
 # should include gas price here (in course video it was not there)
 print("deployong contract...")
 transaction = SimpleStorage.constructor().buildTransaction(
@@ -95,7 +95,7 @@ simple_storage = w3.eth.contract(address=tx_receipt.contractAddress, abi=abi)
 print(simple_storage.functions.retrieve().call())
 
 
-
+#CHANGE STATE OF VARAIBLE IN CONTRACT
 print("Updating Contract...")
 # nonce plus 1 because we used nonce for the constructor transaction
 store_transaction = simple_storage.functions.store(15).buildTransaction(
