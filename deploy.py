@@ -39,12 +39,12 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 
 
 chain_id = 1337
-my_address = "0xC40959CbF723fF578a71DA9301FE44bE8E118De9"
+my_address = "0x29919903fD03443c792514CBe365D4033"
 
 
 # whenever we are importing private_key or addresses we should mention 0x infront of it in python
 #(hexadecimal version of the private key)
-private_key = "0xf0a3a80abf563c15a5c4a62881fcc6d6e2489190fd26c776c518171a31399c93"
+private_key = "0x9e28e3eb05ddcbdc7847268f291a968dc11010f7fe708d972f74484e016fb6c5"
 
 
 # Create a smart contract in python woith the help of ganache
@@ -67,4 +67,3 @@ transaction = SimpleStorage.constructor().buildTransaction(
     {"chainId": chain_id, "gasPrice":w3.eth.gas_price, "from":my_address, "nonce": nonce}
 )
 
-print(transaction)
