@@ -1,3 +1,7 @@
+# step1 in cmd -> brownie init
+# step2 in cmd -> brownie compile (after addind sol file in contracts folder) 
+
+
 # add account from terminal in brownie -- brownie accounts new <account_name>
 # to see all accounts --> browine accounts list
 # deleteaccounts in brownie --> brownie accounts delete <account_name>
