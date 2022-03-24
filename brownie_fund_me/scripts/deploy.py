@@ -1,5 +1,9 @@
 from brownie import FundMe, network, config, MockV3Aggregator
-from scripts.helpful_scripts import get_account
+from scripts.helpful_scripts import get_account, deploy_mocks, LOCAL_BLOCKCHAIN_ENVIRONMENTS
+from web3 import Web3
+
+# to add a new network such that brownie can store the events and
+# transactions to that event. cmd ->brownie networks add Ethereum <name(user specific)> host=<http address> chainid=<chainId>
 
 def deploy_fund_me():
     account = get_account()
@@ -7,15 +11,11 @@ def deploy_fund_me():
 
     # if we are on a persistent network like rinkeby, use the associated address
     # otherwise, deploy mocks
-    if network.show_active() != "development":
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         price_feed_address = config["networks"][network.show_active()]["eth_usd_price_feed"]
     else:
-        print(f"The active network is { network.show_active() }")
-        print(f"Deploying Mocks...")
-        mock_aggregator = MockV3Aggregator.deploy(18, 2000000000000000000000, {"from": account})
-        
-        price_feed_address = mock_aggregator.address
-        print("Mocks Deployed")
+        deploy_mocks()
+        price_feed_address = MockV3Aggregator[-1].address
 
     fund_me = FundMe.deploy(
         price_feed_address,
@@ -25,6 +25,7 @@ def deploy_fund_me():
     
     # fund_me.address -> to get address of our funding
     print(f"Contract deployed to {fund_me.address}")
+    return fund_me
 
 def main():
     deploy_fund_me()

@@ -44,7 +44,7 @@ contract FundMe {
     function getPrice() public view returns (uint256) {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         //Type casting in solidity.
-        return uint256(answer);
+        return uint256(answer * 10000000000);
     }
 
     function getConversionRate(uint256 ethAmount)
@@ -55,6 +55,14 @@ contract FundMe {
         uint256 ethPrice = getPrice();
         uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
         return ethAmountInUsd;
+    }
+
+    function getEntranceFee() public view returns (uint256) {
+        //minimumUSD
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        return ((minimumUSD * precision) / price) + 1;
     }
 
     //before u run this function do this require statement first
