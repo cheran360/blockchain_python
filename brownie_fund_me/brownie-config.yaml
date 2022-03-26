@@ -7,8 +7,12 @@ compiler:
       - "@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1"
 dotenv: .env
 networks:
+  default: development
   rinkeby:
     eth_usd_price_feed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
+    verify: True
+  rinkeby:
+    eth_usd_price_feed: ""
     verify: True
   development:
     verify: False
